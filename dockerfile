@@ -1,14 +1,7 @@
-# Gunakan image Python resmi
-FROM python
+FROM python:3.9
 
-# Set working directory dalam container
 WORKDIR /app
-
-# Salin semua file ke dalam container
 COPY . /app
+RUN pip install flask prometheus_client
 
-# Install dependensi
-RUN pip install flask
-
-# Jalankan aplikasi
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]
