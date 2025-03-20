@@ -2,6 +2,22 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/syafiq-is/latihan-devops.git' 
+            }
+        }
+        
+        stage('Install dependencies') {
+            steps {
+                script {
+                    sh 'python3 -m venv venv'
+                    // Activate virtual env and install dependencies
+                    sh 'bash -c "source venv/bin/activate && pip install -r requirements.txt"'
+                }
+            }
+        }
+        
         stage('Test') {
             steps {
                 sh 'pytest test_app.py'
@@ -19,6 +35,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building app..."
+                sh "docker build -t flask-app-prod ."
             }
             post {
                 success {
