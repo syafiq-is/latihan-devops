@@ -21,7 +21,7 @@ pipeline {
                 script {
                     sh 'python3 -m venv my-venv'
                     // change the Jenkins > Manage Jenkins > System > Shell, into /bin/bash
-                    sh 'source venv/bin/activate && pip install -r requirements.txt'
+                    sh 'source my-venv/bin/activate && pip install -r requirements.txt'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Running Test..."
-                sh 'source venv/bin/activate && pytest test_app.py'
+                sh 'source my-venv/bin/activate && pytest test_app.py'
             }
             post {
                 success {
